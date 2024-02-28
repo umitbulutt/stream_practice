@@ -159,8 +159,17 @@ public class Practice {
     // Display all the departments where the region of department is 'Europe'
     public static List<Department> getAllDepartmentsWhereRegionOfCountryIsEurope() {
         //TODO Implement the method
-     
-        return new ArrayList<>();
+        List<Department> departmentListOfEuropeRegion = new ArrayList<>();
+
+        for (Department eachDepartment : getAllDepartments()) {
+            if (eachDepartment.getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Europe")){
+                departmentListOfEuropeRegion.add(eachDepartment);
+            }
+        }
+
+
+
+        return departmentListOfEuropeRegion;
     }
 
     // Display if there is any employee with salary less than 1000. If there is none, the method should return true
