@@ -230,7 +230,14 @@ public class Practice {
     // Display the salary of the employee Grant Douglas (lastName: Grant, firstName: Douglas)
     public static Long getGrantDouglasSalary() throws Exception {
         //TODO Implement the method
-        return 1L;
+        Optional<Long> salaryGrantDouglasOptional = getAllEmployees().stream()
+                .filter(s -> s.getFirstName().equalsIgnoreCase("Douglas"))
+                .filter(s -> s.getLastName().equalsIgnoreCase("Grant"))
+                .map(Employee::getSalary)
+                .findFirst();
+
+
+        return salaryGrantDouglasOptional.orElse(0L);
     }
 
     // Display the maximum salary an employee gets
