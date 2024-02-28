@@ -537,7 +537,16 @@ public class Practice {
     // Display the number of employees whose job title is programmer and department name is 'IT'
     public static Long getNumberOfEmployeesWhoseJobTitleIsProgrammerAndDepartmentNameIsIT() {
         //TODO Implement the method
-        return 1L;
+       Long numberOfTheList =
+               getAllEmployees().stream()
+                .filter(s->s.getJob().getJobTitle().equalsIgnoreCase("programmer"))
+                .filter(s->s.getDepartment().getDepartmentName().equalsIgnoreCase("IT"))
+                .collect(Collectors.toList())
+                       .stream().count();
+
+
+
+        return numberOfTheList;
     }
 
     // Display all the employees whose department id is 50, 80, or 100
