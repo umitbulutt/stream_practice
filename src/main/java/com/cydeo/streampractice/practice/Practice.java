@@ -4,6 +4,7 @@ import com.cydeo.streampractice.model.*;
 import com.cydeo.streampractice.service.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -483,7 +484,12 @@ public class Practice {
     // Display all the job histories where the start date is after 01.01.2005
     public static List<JobHistory> getAllJobHistoriesStartDateAfterFirstDayOfJanuary2005() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<JobHistory> jobsHistories1 = getAllJobHistories().stream()
+                .filter(s->s.getStartDate().isAfter(LocalDate.of(2005,01,01)))
+                .collect(Collectors.toList());
+
+
+        return jobsHistories1;
     }
 
     // Display all the job histories where the end date is 31.12.2007 and the job title of job is 'Programmer'
