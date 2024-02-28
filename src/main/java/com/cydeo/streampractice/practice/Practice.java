@@ -379,13 +379,24 @@ public class Practice {
     // Display the employee(s) who gets the second minimum salary
     public static List<Employee> getSecondMinSalaryEmployee() {
         //TODO Implement the method
-        return new ArrayList<>();
+
+        return getAllEmployees().stream()
+                .sorted(Comparator.comparing(Employee::getSalary))
+                .skip(1)
+                .limit(1)
+                .collect(Collectors.toList());
+
+
+
+
     }
 
     // Display the average salary of the employees
     public static Double getAverageSalary() {
         //TODO Implement the method
-        return 1d;
+        Double averageSalary = getAllEmployees().stream()
+                .collect(Collectors.averagingDouble(Employee::getSalary));
+        return averageSalary;
     }
 
     // Display all the employees who are making more than average salary
