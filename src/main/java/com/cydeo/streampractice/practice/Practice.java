@@ -448,7 +448,16 @@ public class Practice {
     // Display the employee whose first name is 'Alyssa' and manager's first name is 'Eleni' and department name is 'Sales'
     public static Employee getEmployeeWhoseFirstNameIsAlyssaAndManagersFirstNameIsEleniAndDepartmentNameIsSales() throws Exception {
         //TODO Implement the method
-        return new Employee();
+        List<Employee> l = getAllEmployees().stream()
+                .filter(s->s.getDepartment().getDepartmentName().equalsIgnoreCase("Sales"))
+                .filter(s->s.getManager().getFirstName().equalsIgnoreCase("Eleni"))
+                .filter(s->s.getFirstName().equalsIgnoreCase("Alyssa"))
+                .collect(Collectors.toList());
+
+
+        return  l.get(0);
+
+
     }
 
     // Display all the job histories in ascending order by start date
