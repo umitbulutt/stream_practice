@@ -402,7 +402,13 @@ public class Practice {
     // Display all the employees who are making more than average salary
     public static List<Employee> getAllEmployeesAboveAverage() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Employee> employeesAboveAverage = getAllEmployees().stream()
+                .filter(s->s.getSalary()>getAverageSalary())
+                .collect(Collectors.toList());
+
+
+
+        return employeesAboveAverage;
     }
 
     // Display all the employees who are making less than average salary
