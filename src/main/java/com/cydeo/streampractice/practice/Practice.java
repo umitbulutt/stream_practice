@@ -341,7 +341,23 @@ public class Practice {
     // Display the employee(s) who gets the minimum salary
     public static List<Employee> getMinSalaryEmployee() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Employee> minSalaryEmployee = new ArrayList<>();
+
+        try {
+            Long  minSalary = getMinSalary();
+
+            minSalaryEmployee = getAllEmployees().stream()
+                    .filter(s->s.getSalary().equals(minSalary))
+                    .collect(Collectors.toList());
+
+
+            return minSalaryEmployee;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     // Display the second minimum salary an employee gets
