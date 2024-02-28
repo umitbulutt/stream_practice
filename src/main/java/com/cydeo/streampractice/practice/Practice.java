@@ -4,10 +4,7 @@ import com.cydeo.streampractice.model.*;
 import com.cydeo.streampractice.service.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class Practice {
@@ -80,40 +77,83 @@ public class Practice {
         return jobHistoryService.readAll();
     }
 
+
+
     // Display all the employees' first names
     public static List<String> getAllEmployeesFirstName() {
         //TODO Implement the method
-        return getAllEmployeesFullNames();
+        List<String> names = new ArrayList<>();
+        for (Employee eachEmployee : getAllEmployees()) {
+            names.add(eachEmployee.getFirstName());
+        }
+        return names;
+
     }
 
     // Display all the countries' names
     public static List<String> getAllCountryNames() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<String> countryNames = new ArrayList<>();
+        for (Country eachCountry : getAllCountries()) {
+            countryNames.add(eachCountry.getCountryName());
+        }
+
+        return countryNames ;
     }
 
     // Display all the departments' managers' first names
     public static List<String> getAllDepartmentManagerFirstNames() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<String> departmentManagersFirstNames = new ArrayList<>();
+        for (Department eachDepartment : getAllDepartments()) {
+            departmentManagersFirstNames.add(eachDepartment.getManager().getFirstName());
+        }
+
+        return departmentManagersFirstNames;
     }
 
     // Display all the departments where manager name of the department is 'Steven'
     public static List<Department> getAllDepartmentsWhichManagerFirstNameIsSteven() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Department> steveSDepartmens = new ArrayList<>();
+
+        for (Department eachDepartment : getAllDepartments()) {
+            if (eachDepartment.getManager().getFirstName().equalsIgnoreCase("Steven")){
+                steveSDepartmens.add(eachDepartment);
+            }
+        }
+
+        return steveSDepartmens;
     }
 
     // Display all the departments where postal code of the location of the department is '98199'
     public static List<Department> getAllDepartmentsWhereLocationPostalCodeIs98199() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Department> departmentsList = new ArrayList<>();
+
+        for (Department eachDepartment : getAllDepartments()) {
+            if(eachDepartment.getLocation().getPostalCode().equalsIgnoreCase("98199")){
+                departmentsList.add(eachDepartment);
+            }
+        }
+
+
+        return departmentsList;
     }
 
     // Display the region of the IT department
     public static Region getRegionOfITDepartment() throws Exception {
         //TODO Implement the method
-        return new Region();
+        Region regionIT = new Region();
+
+        for (Department eachDepartment : getAllDepartments()) {
+           if ( eachDepartment.getDepartmentName().equalsIgnoreCase("IT")){
+               regionIT = eachDepartment.getLocation().getCountry().getRegion();
+           }
+        }
+
+
+        return regionIT;
     }
 
     // Display all the departments where the region of department is 'Europe'
