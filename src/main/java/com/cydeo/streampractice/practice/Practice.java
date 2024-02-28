@@ -219,7 +219,12 @@ public class Practice {
     // Display all the employees whose salary is between 6000 and 7000
     public static List<Employee> getAllEmployeesSalaryBetween() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Employee> listEmployeesAverage = getAllEmployees().stream()
+                .filter(s->s.getSalary()>6000)
+                .filter(s->s.getSalary()<7000)
+                .collect(Collectors.toList());
+
+        return listEmployeesAverage;
     }
 
     // Display the salary of the employee Grant Douglas (lastName: Grant, firstName: Douglas)
