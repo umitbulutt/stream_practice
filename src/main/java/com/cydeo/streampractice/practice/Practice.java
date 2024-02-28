@@ -331,6 +331,7 @@ public class Practice {
 
       Optional<Long>  minSalary =  getAllEmployees().stream()
                 .map(Employee::getSalary)
+
                 .reduce(Long::min);
 
 
@@ -363,7 +364,16 @@ public class Practice {
     // Display the second minimum salary an employee gets
     public static Long getSecondMinSalary() throws Exception {
         //TODO Implement the method
-        return 1L;
+
+    Optional<Long> secondMinSalary =
+            getAllEmployees().stream()
+                 .map(Employee::getSalary)
+                 .sorted()
+                 .skip(1)
+                 .findFirst();
+
+        return secondMinSalary.orElse(0L);
+
     }
 
     // Display the employee(s) who gets the second minimum salary
