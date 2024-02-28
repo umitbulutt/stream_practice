@@ -159,6 +159,7 @@ public class Practice {
     // Display all the departments where the region of department is 'Europe'
     public static List<Department> getAllDepartmentsWhereRegionOfCountryIsEurope() {
         //TODO Implement the method
+     
         return new ArrayList<>();
     }
 
