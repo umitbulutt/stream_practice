@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparing;
+
 @Component
 public class Practice {
 
@@ -251,8 +253,16 @@ public class Practice {
 
     // Display the employee(s) who gets the maximum salary
     public static List<Employee> getMaxSalaryEmployee() {
-        //TODO Implement the method
-        return new ArrayList<>();
+
+        List<Employee> employeeMaxSalaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .max(Long::compare)
+                .map(maxSalary -> getAllEmployees().stream()
+                        .filter(employee -> employee.getSalary() == maxSalary)
+                        .collect(Collectors.toList()))
+                .orElse(List.of());
+
+        return employeeMaxSalaries;
     }
 
     // Display the max salary employee's job
