@@ -578,7 +578,12 @@ public class Practice {
     // Display the full names of all the employees
     public static List<String> getAllEmployeesFullNames() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<String> listOfEmployees = getAllEmployees().stream()
+                .map(s-> s.getFirstName() + " " + s.getLastName())
+                .collect(Collectors.toList());
+
+
+        return listOfEmployees;
     }
 
     // Display the length of the longest full name(s)
