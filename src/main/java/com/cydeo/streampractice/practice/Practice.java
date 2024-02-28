@@ -2,6 +2,7 @@ package com.cydeo.streampractice.practice;
 
 import com.cydeo.streampractice.model.*;
 import com.cydeo.streampractice.service.*;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -506,7 +507,14 @@ public class Practice {
     // Display the employee whose job history start date is 01.01.2007 and job history end date is 31.12.2007 and department's name is 'Shipping'
     public static Employee getEmployeeOfJobHistoryWhoseStartDateIsFirstDayOfJanuary2007AndEndDateIsLastDayOfDecember2007AndDepartmentNameIsShipping() throws Exception {
         //TODO Implement the method
-        return new Employee();
+
+       return  (Employee) getAllJobHistories().stream()
+               .filter(s->s.getStartDate().equals(LocalDate.of(2007,01,01)))
+               .filter(s->s.getEndDate().equals(LocalDate.of(2007,12,31)))
+               .filter(s->s.getDepartment().getDepartmentName().equalsIgnoreCase("Shipping"))
+                ;
+
+//this question might be wrong
     }
 
     // Display all the employees whose first name starts with 'A'
@@ -518,7 +526,12 @@ public class Practice {
     // Display all the employees whose job id contains 'IT'
     public static List<Employee> getAllEmployeesJobIdContainsIT() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Employee> list =        getAllEmployees().stream()
+                .filter(s->s.getJob().getId().contains("IT"))
+                .collect(Collectors.toList());
+
+
+        return list;
     }
 
     // Display the number of employees whose job title is programmer and department name is 'IT'
