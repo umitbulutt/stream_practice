@@ -604,13 +604,27 @@ public class Practice {
     // Display the employee(s) with the longest full name(s)
     public static List<Employee> getLongestNamedEmployee() {
         //TODO Implement the method
+
+
+
+
+
         return new ArrayList<>();
     }
 
     // Display all the employees whose department id is 90, 60, 100, 120, or 130
     public static List<Employee> getAllEmployeesDepartmentIdIs90or60or100or120or130() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Employee> list = getAllEmployees().stream()
+                .filter(s->s.getDepartment().getId() == 90 ||
+                        s.getDepartment().getId() == 60 ||
+                        s.getDepartment().getId() == 100 ||
+                        s.getDepartment().getId() == 120 ||
+                        s.getDepartment().getId() ==130)
+                .collect(Collectors.toList());
+
+
+        return list;
     }
 
     // Display all the employees whose department id is NOT 90, 60, 100, 120, or 130
