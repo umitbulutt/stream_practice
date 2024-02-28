@@ -5,6 +5,7 @@ import com.cydeo.streampractice.service.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class Practice {
@@ -205,7 +206,14 @@ public class Practice {
     // Display all the employees whose salary is less than 5000
     public static List<Employee> getAllEmployeesWithLessSalaryThan5000() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<Employee> employeesWhoNeedRaise =getAllEmployees().stream()
+                .filter(s->s.getSalary()<5000)
+                .collect(Collectors.toList());
+
+
+
+
+        return employeesWhoNeedRaise;
     }
 
     // Display all the employees whose salary is between 6000 and 7000
