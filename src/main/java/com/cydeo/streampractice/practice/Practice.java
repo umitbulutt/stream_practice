@@ -87,10 +87,9 @@ public class Practice {
     // Display all the employees' first names
     public static List<String> getAllEmployeesFirstName() {
         //TODO Implement the method
-        List<String> names = new ArrayList<>();
-        for (Employee eachEmployee : getAllEmployees()) {
-            names.add(eachEmployee.getFirstName());
-        }
+        List<String> names = getAllEmployees().stream()
+                .map(s->s.getFirstName())
+                .collect(Collectors.toList());
         return names;
 
     }
@@ -98,10 +97,10 @@ public class Practice {
     // Display all the countries' names
     public static List<String> getAllCountryNames() {
         //TODO Implement the method
-        List<String> countryNames = new ArrayList<>();
-        for (Country eachCountry : getAllCountries()) {
-            countryNames.add(eachCountry.getCountryName());
-        }
+        List<String> countryNames = getAllCountries().stream()
+                .map(s->s.getCountryName())
+                .collect(Collectors.toList());
+
 
         return countryNames ;
     }
@@ -109,10 +108,10 @@ public class Practice {
     // Display all the departments' managers' first names
     public static List<String> getAllDepartmentManagerFirstNames() {
         //TODO Implement the method
-        List<String> departmentManagersFirstNames = new ArrayList<>();
-        for (Department eachDepartment : getAllDepartments()) {
-            departmentManagersFirstNames.add(eachDepartment.getManager().getFirstName());
-        }
+        List<String> departmentManagersFirstNames = getAllDepartments().stream()
+                .map(s->s.getManager().getFirstName())
+                .collect(Collectors.toList());
+
 
         return departmentManagersFirstNames;
     }
@@ -120,13 +119,9 @@ public class Practice {
     // Display all the departments where manager name of the department is 'Steven'
     public static List<Department> getAllDepartmentsWhichManagerFirstNameIsSteven() {
         //TODO Implement the method
-        List<Department> steveSDepartmens = new ArrayList<>();
-
-        for (Department eachDepartment : getAllDepartments()) {
-            if (eachDepartment.getManager().getFirstName().equalsIgnoreCase("Steven")){
-                steveSDepartmens.add(eachDepartment);
-            }
-        }
+        List<Department> steveSDepartmens =getAllDepartments().stream()
+                .filter(s->s.getManager().getFirstName().equalsIgnoreCase("Steven"))
+                .collect(Collectors.toList());
 
         return steveSDepartmens;
     }
@@ -134,14 +129,9 @@ public class Practice {
     // Display all the departments where postal code of the location of the department is '98199'
     public static List<Department> getAllDepartmentsWhereLocationPostalCodeIs98199() {
         //TODO Implement the method
-        List<Department> departmentsList = new ArrayList<>();
-
-        for (Department eachDepartment : getAllDepartments()) {
-            if(eachDepartment.getLocation().getPostalCode().equalsIgnoreCase("98199")){
-                departmentsList.add(eachDepartment);
-            }
-        }
-
+        List<Department> departmentsList = getAllDepartments().stream()
+                .filter(s->s.getLocation().getPostalCode().equalsIgnoreCase("98199"))
+                .collect(Collectors.toList());
 
         return departmentsList;
     }
@@ -149,30 +139,22 @@ public class Practice {
     // Display the region of the IT department
     public static Region getRegionOfITDepartment() throws Exception {
         //TODO Implement the method
-        Region regionIT = new Region();
 
-        for (Department eachDepartment : getAllDepartments()) {
-           if ( eachDepartment.getDepartmentName().equalsIgnoreCase("IT")){
-               regionIT = eachDepartment.getLocation().getCountry().getRegion();
-           }
-        }
+        Optional<Region> regionIT = getAllDepartments().stream()
+                .filter(s->s.getDepartmentName().equalsIgnoreCase("IT"))
+                .map(s->s.getLocation().getCountry().getRegion())
+                .findFirst();
 
 
-        return regionIT;
+        return regionIT.orElse(null);
     }
 
     // Display all the departments where the region of department is 'Europe'
     public static List<Department> getAllDepartmentsWhereRegionOfCountryIsEurope() {
         //TODO Implement the method
-        List<Department> departmentListOfEuropeRegion = new ArrayList<>();
-
-        for (Department eachDepartment : getAllDepartments()) {
-            if (eachDepartment.getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Europe")){
-                departmentListOfEuropeRegion.add(eachDepartment);
-            }
-        }
-
-
+        List<Department> departmentListOfEuropeRegion = getAllDepartments().stream()
+                .filter(s->s.getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Europe"))
+                .collect(Collectors.toList());
 
         return departmentListOfEuropeRegion;
     }
@@ -381,15 +363,18 @@ public class Practice {
     // Display the employee(s) who gets the second minimum salary
     public static List<Employee> getSecondMinSalaryEmployee() {
         //TODO Implement the method
+        Optional<Long> secondMinSalary =
+                getAllEmployees().stream()
+                        .map(Employee::getSalary)
+                        .sorted()
+                        .skip(1)
+                        .findFirst();
 
-        return getAllEmployees().stream()
-                .sorted(Comparator.comparing(Employee::getSalary))
-                .skip(1)
-                .limit(1)
-                .collect(Collectors.toList());
+                List<Employee> list = getAllEmployees().stream()
+                        .filter(s->s.getSalary().equals((Long)secondMinSalary.get()))
+                        .collect(Collectors.toList());
 
-
-
+        return list;
 
     }
 
@@ -426,14 +411,10 @@ public class Practice {
     // Display all the employees separated based on their department id number
     public static Map<Long, List<Employee>> getAllEmployeesForEachDepartment() {
         //TODO Implement the method
-        Map<Long, List<Employee>> list = new HashMap<>();
+        Map<Long, List<Employee>> list = getAllEmployees().stream()
+                .collect(Collectors.groupingBy(s-> s.getDepartment().getId()));
 
-
-
-
-
-
-        return new HashMap<>();
+        return list;
     }
 
     // Display the total number of the departments
@@ -508,19 +489,27 @@ public class Practice {
     public static Employee getEmployeeOfJobHistoryWhoseStartDateIsFirstDayOfJanuary2007AndEndDateIsLastDayOfDecember2007AndDepartmentNameIsShipping() throws Exception {
         //TODO Implement the method
 
-       return  (Employee) getAllJobHistories().stream()
-               .filter(s->s.getStartDate().equals(LocalDate.of(2007,01,01)))
-               .filter(s->s.getEndDate().equals(LocalDate.of(2007,12,31)))
-               .filter(s->s.getDepartment().getDepartmentName().equalsIgnoreCase("Shipping"))
-                ;
+        List<Employee> list =  getAllEmployees().stream()
+                .filter(employee -> getAllJobHistories().stream()
+                        .anyMatch(jobHistory ->
+                                jobHistory.getEmployee().equals(employee) &&
+                                        jobHistory.getStartDate().equals(LocalDate.of(2007, 1, 1)) &&
+                                        jobHistory.getEndDate().equals(LocalDate.of(2007, 12, 31)) &&
+                                        jobHistory.getDepartment().getDepartmentName().equalsIgnoreCase("Shipping")
+                        )
+                )
+                .collect(Collectors.toList());
+        return list.get(0);
 
-//this question might be wrong
     }
 
     // Display all the employees whose first name starts with 'A'
     public static List<Employee> getAllEmployeesFirstNameStartsWithA() {
         //TODO Implement the method
-        return new ArrayList<>();
+     List<Employee> list =    getAllEmployees().stream()
+                .filter(s->s.getFirstName().startsWith("A"))
+                .collect(Collectors.toList());
+        return list;
     }
 
     // Display all the employees whose job id contains 'IT'
@@ -602,14 +591,24 @@ public class Practice {
     }
 
     // Display the employee(s) with the longest full name(s)
-    public static List<Employee> getLongestNamedEmployee() {
+    public static List<Employee> getLongestNamedEmployee()  {
         //TODO Implement the method
 
+        List<String> listOfEmployeesNames = getAllEmployees().stream()
+                .map(s-> s.getFirstName() + " " + s.getLastName())
+                .collect(Collectors.toList());
+
+        Integer nameLength = listOfEmployeesNames.stream()
+                .mapToInt(s-> s.length())
+                .max()
+                .orElse(0);
+
+     List<Employee> list  =    getAllEmployees().stream()
+                .filter(employee -> (employee.getFirstName() + " " + employee.getLastName()).length() == nameLength)
+                .collect(Collectors.toList());
 
 
-
-
-        return new ArrayList<>();
+        return list;
     }
 
     // Display all the employees whose department id is 90, 60, 100, 120, or 130
