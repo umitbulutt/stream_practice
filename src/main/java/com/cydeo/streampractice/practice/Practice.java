@@ -190,7 +190,16 @@ public class Practice {
     // Check if the salaries of all the employees in IT department are greater than 2000 (departmentName: IT)
     public static boolean checkIfThereIsAnySalaryGreaterThan2000InITDepartment() {
         //TODO Implement the method
-        return false;
+
+       boolean isGreater =  getAllEmployees().stream()
+                .filter(s->s.getDepartment().getDepartmentName().equalsIgnoreCase("IT"))
+                .anyMatch(s->s.getSalary()>2000);
+
+        if (isGreater==false){
+            return false;
+        }else {
+            return true;
+        }
     }
 
     // Display all the employees whose salary is less than 5000
