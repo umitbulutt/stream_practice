@@ -175,7 +175,16 @@ public class Practice {
     // Display if there is any employee with salary less than 1000. If there is none, the method should return true
     public static boolean checkIfThereIsNoSalaryLessThan1000() {
         //TODO Implement the method
-        return false;
+
+      boolean isSalaryLessThan1000 =   getAllEmployees().stream()
+                .anyMatch(s->s.getSalary()<1000);
+
+      if (isSalaryLessThan1000==true){
+          return false;
+      }else {
+          return true;
+      }
+
     }
 
     // Check if the salaries of all the employees in IT department are greater than 2000 (departmentName: IT)
