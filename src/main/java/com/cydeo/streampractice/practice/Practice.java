@@ -307,7 +307,22 @@ public class Practice {
     // Display the employee(s) who gets the second maximum salary
     public static List<Employee> getSecondMaxSalaryEmployee() {
         //TODO Implement the method
-        return new ArrayList<>();
+
+
+      Long secondMaxSalary=  getAllEmployees().stream()
+              .map(Employee::getSalary)
+              .distinct()
+              .sorted(Comparator.reverseOrder())
+              .skip(1)
+              .findFirst()
+              .orElse(null);
+
+        List<Employee> secondMaxSalaryEmployee = getAllEmployees().stream()
+                .filter(s->s.getSalary().equals(secondMaxSalary))
+                .collect(Collectors.toList());
+
+        return secondMaxSalaryEmployee;
+
     }
 
     // Display the minimum salary an employee gets
