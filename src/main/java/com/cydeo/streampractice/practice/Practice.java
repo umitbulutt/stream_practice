@@ -268,7 +268,13 @@ public class Practice {
     // Display the max salary employee's job
     public static Job getMaxSalaryEmployeeJob() throws Exception {
         //TODO Implement the method
-        return new Job();
+
+       Job job =  getAllJobs().stream()
+               .sorted(Comparator.comparing(Job::getMaxSalary).reversed())
+               .findFirst()
+               .orElse(null);
+
+        return job;
     }
 
     // Display the max salary in Americas Region
