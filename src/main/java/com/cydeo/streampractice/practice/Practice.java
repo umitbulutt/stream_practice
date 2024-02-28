@@ -418,21 +418,31 @@ public class Practice {
                 .filter(s->s.getSalary()<getAverageSalary())
                 .collect(Collectors.toList());
 
-
-
         return employeesAboveAverage;
     }
 
     // Display all the employees separated based on their department id number
     public static Map<Long, List<Employee>> getAllEmployeesForEachDepartment() {
         //TODO Implement the method
+        Map<Long, List<Employee>> list = new HashMap<>();
+
+
+
+
+
+
         return new HashMap<>();
     }
 
     // Display the total number of the departments
     public static Long getTotalDepartmentsNumber() {
         //TODO Implement the method
-        return 1L;
+        Long totalNumber = getAllDepartments().stream()
+                .count();
+
+
+
+        return totalNumber;
     }
 
     // Display the employee whose first name is 'Alyssa' and manager's first name is 'Eleni' and department name is 'Sales'
