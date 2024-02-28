@@ -463,13 +463,21 @@ public class Practice {
     // Display all the job histories in ascending order by start date
     public static List<JobHistory> getAllJobHistoriesInAscendingOrder() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<JobHistory> jobHistoryListAscending =  getAllJobHistories().stream()
+                .sorted(Comparator.comparing(JobHistory::getStartDate))
+                .collect(Collectors.toList());
+
+        return jobHistoryListAscending;
     }
 
     // Display all the job histories in descending order by start date
     public static List<JobHistory> getAllJobHistoriesInDescendingOrder() {
         //TODO Implement the method
-        return new ArrayList<>();
+        List<JobHistory> jobHistoryListDescending =  getAllJobHistories().stream()
+                .sorted(Comparator.comparing(JobHistory::getStartDate).reversed())
+                .collect(Collectors.toList());
+
+        return jobHistoryListDescending;
     }
 
     // Display all the job histories where the start date is after 01.01.2005
