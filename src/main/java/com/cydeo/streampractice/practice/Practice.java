@@ -280,7 +280,15 @@ public class Practice {
     // Display the max salary in Americas Region
     public static Long getMaxSalaryInAmericasRegion() throws Exception {
         //TODO Implement the method
-        return 1L;
+
+
+       Optional <Long> maxSalaryInAmerica=  getAllEmployees().stream()
+                .filter(s->s.getDepartment().getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Americas"))
+                .map(Employee::getSalary)
+                .reduce(Long::max)
+                .stream().findFirst();
+
+        return maxSalaryInAmerica.orElse(null);
     }
 
     // Display the second maximum salary an employee gets
