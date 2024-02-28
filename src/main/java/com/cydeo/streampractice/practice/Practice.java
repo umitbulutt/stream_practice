@@ -328,7 +328,14 @@ public class Practice {
     // Display the minimum salary an employee gets
     public static Long getMinSalary() throws Exception {
         //TODO Implement the method
-        return 1L;
+
+      Optional<Long>  minSalary =  getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .reduce(Long::min);
+
+
+
+        return minSalary.orElse(0L);
     }
 
     // Display the employee(s) who gets the minimum salary
